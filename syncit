@@ -18,7 +18,7 @@ else
     echo "#####################################################"
    
     $Rsync -e "ssh -i /storage/.ssh/id_rsa" -av caribou@petitpois3:/data/Musique/ /var/media/external_disk/Musique
-    $Rsync -e "ssh -i /storage/.ssh/id_rsa" -av --exclude-from=/tmp/exclude.$$ caribou@petitpois3:/data/Films/ /var/media/external_disk/Vidéos 
+    $Rsync -e "ssh -i /storage/.ssh/id_rsa" -av --exclude-from=/tmp/exclude.$$ caribou@petitpois3:/data/Films/ /var/media/external_disk/Videos
 fi
     echo "####################################################"
     echo "### Synchronization completée à $(date +%Y-%m-%d:%H:%M) ###"
