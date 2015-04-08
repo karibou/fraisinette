@@ -1,5 +1,9 @@
 #!/bin/bash
 
+echo "#####################################################"
+echo "### Début de la sychronisation a $(date +%Y-%m-%d:%H:%M) ###"
+echo "#####################################################"
+
 #ping -qc4 -W10 GigasetIP > /dev/null 2>&1
 ping -qc4 -W10 petitpois3 > /dev/null 2>&1
 HostDead=$?
@@ -10,13 +14,8 @@ cat << EOF > /tmp/exclude.$$
 EOF
 
 if [[ "$HostDead" == "1" ]];then
-    exit 0
+    echo "Serveur petitpois3 indisponible"
 else
-  
-    echo "#####################################################"
-    echo "### Début de la sychronisation a $(date +%Y-%m-%d:%H:%M) ###"
-    echo "#####################################################"
-   
     $Rsync -e "ssh -i /storage/.ssh/id_rsa" -av caribou@petitpois3:/data/Musique/ /var/media/external_disk/Musique
     $Rsync -e "ssh -i /storage/.ssh/id_rsa" -av --exclude-from=/tmp/exclude.$$ caribou@petitpois3:/data/Films/ /var/media/external_disk/Videos
 fi
@@ -24,3 +23,4 @@ fi
     echo "### Synchronization completée à $(date +%Y-%m-%d:%H:%M) ###"
     echo "####################################################"
 rm -f /tmp/exclude.$$
+exit 0
